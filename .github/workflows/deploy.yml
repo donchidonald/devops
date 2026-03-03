@@ -1,0 +1,19 @@
+name: Deploy Website
+on:
+  push:
+    branches: [ "main" ]
+    
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: $SERVER_HOST
+          username: $SERVER_USER
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /var/www/geek-devops.de/public_html
+            git pull
